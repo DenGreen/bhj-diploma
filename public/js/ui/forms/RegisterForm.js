@@ -11,5 +11,6 @@ class RegisterForm {
    * и закрывает окно, в котором находится форма
    * */
   onSubmit( options ) {
+
   }
 }
