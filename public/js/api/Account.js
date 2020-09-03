@@ -4,4 +4,5 @@
  * Имеет свойство URL со значением '/account'
  * */
 class Account {
+    
 }

@@ -8,16 +8,10 @@ class Entity {
    * Это могут быть счета или доходы/расходы
    * (в зависимости от того, что наследуется от Entity)
    * */
-  static list(
-    data,
-    callback = function (err, response) {
-      console.log("Ошибка, если есть", err);
-      console.log("Данные, если нет ошибки", response);
-    }
-  ) {
-
+  URL = '';
+  static list(data, callback = (f) => f) {
     return createRequest({
-      url:'',
+      url: this.URL,
       data,
       method: "GET",
       responseType: "json",
@@ -30,17 +24,44 @@ class Entity {
    * на сервер. (в зависимости от того,
    * что наследуется от Entity)
    * */
-  static create(data, callback = (f) => f) {}
+  static create(data, callback = (f) => f) {
+    modifiedData = Object.assign({ _method: 'PUT' }, data );
+    return createRequest({
+      url: this.URL,
+      data: modifiedData,
+      method: "POST",
+      responseType: "json",
+      callback,
+    });
+  }
 
   /**
    * Получает информацию о счёте или доходе/расходе
    * (в зависимости от того, что наследуется от Entity)
    * */
-  static get(id = "", data, callback = (f) => f) {}
+  static get(id = "", data, callback = (f) => f) {
+    return createRequest({
+      url: this.URL,
+      id,
+      data,
+      method: "GET",
+      responseType: "json",
+      callback,
+    });
+  }
 
   /**
    * Удаляет информацию о счёте или доходе/расходе
    * (в зависимости от того, что наследуется от Entity)
    * */
-  static remove(id = "", data, callback = (f) => f) {}
+  static remove(id = "", data, callback = (f) => f) {
+    modifiedData = Object.assign({ _method: 'DELETE', id: id }, data );
+    return createRequest({
+      url: this.URL,
+      data: modifiedData,
+      method: "POST",
+      responseType: "json",
+      callback,
+    });
+  }
 }

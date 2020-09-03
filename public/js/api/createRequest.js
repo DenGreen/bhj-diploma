@@ -15,18 +15,18 @@ const createRequest = (options = {}) => {
       );
       xhr.send();
     } catch (e) {
-      options.callback(e, xhr.response);
+      options.callback(e);
     }
   } else {
     formData = new FormData();
 
-    formData.append("mail", `${options.data.mail}`);
-    formData.append("password", `${options.data.password}`);
+    formData.append("password", `${options.data.mail}`);
+    options.data.password ? formData.append("password", `${options.data.password}`):null;
     try {
       xhr.open("POST", `${options.url}`);
       xhr.send(formData);
     } catch (e) {
-      options.callback(e, xhr.response);
+      options.callback(e);
     }
   }
   return xhr;
