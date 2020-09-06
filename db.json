@@ -6,6 +6,12 @@
       "password": "demo",
       "id": "1",
       "isAuthorized": false
+    },
+    {
+      "email": "test@test.ru",
+      "password": "abracadabra",
+      "id": "28a0c6dwkenwk4ft",
+      "isAuthorized": false
     }
   ],
   "accounts": [

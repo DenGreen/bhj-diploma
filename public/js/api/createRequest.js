@@ -3,31 +3,41 @@
  * на сервер.
  * */
 const createRequest = (options = {}) => {
-  const xhr = new XMLHttpRequest();
-  xhr.withCredentials = true;
-  xhr.responseType = options.responseType ? options.responseType  : 'text';
+  let errorCritical;
+  let xhr = new XMLHttpRequest();
+  let formData = new FormData();
 
   if (options.method === "GET") {
-    try {
-      xhr.open(
-        "GET",
-        `${options.url}?mail=${options.data.mail}&password=${options.data.password}`
-      );
-      xhr.send();
-    } catch (e) {
-      options.callback(e);
+    options.url += `?`;
+
+    for (let elementData in options.data) {
+      options.url += `${elementData}=${options.data.elementData}&`;
     }
   } else {
-    formData = new FormData();
-
-    formData.append("password", `${options.data.mail}`);
-    options.data.password ? formData.append("password", `${options.data.password}`):null;
-    try {
-      xhr.open("POST", `${options.url}`);
-      xhr.send(formData);
-    } catch (e) {
-      options.callback(e);
+    for (let elementData in options.data) {
+      formData.append(elementData, options.data[elementData]);
     }
   }
-  return xhr;
+
+  try {
+    xhr.open(options.method, options.url);
+    xhr.withCredentials = true;
+    xhr.responseType = options.responseType;
+    errorCritical = null;
+  } catch (e) {
+    errorCritical = e;
+    options.callback(erorrCritical, xhr.response);
+  }
+
+  xhr.send(formData);
+
+  xhr.onloadend = function () {
+    if (xhr.status === 200 && xhr.response.success === true) {
+      options.callback(errorCritical, xhr.response);
+      return true;
+    } else {
+      options.callback(errorCritical, xhr.response);
+      return false;
+    }
+  };
 };

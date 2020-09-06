@@ -8,7 +8,8 @@ class Entity {
    * Это могут быть счета или доходы/расходы
    * (в зависимости от того, что наследуется от Entity)
    * */
-  URL = '';
+
+  static URL='';
   static list(data, callback = (f) => f) {
     return createRequest({
       url: this.URL,

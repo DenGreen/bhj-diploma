@@ -49,7 +49,14 @@ class Modal {
    * Удаляет обработчики событий
    * */
   unregisterEvents() {
-
+    const dataModal = this.element.querySelectorAll('button');
+    dataModal.forEach(elementModal => {
+      if(elementModal.dataset.dismiss === 'modal'){
+        elementModal.removeEventListener('click', (e)=>{
+          this.onClose(e);
+        })
+      }
+    });
   }
   /**
    * Открывает окно: устанавливает CSS-свойство display
