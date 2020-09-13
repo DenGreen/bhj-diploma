@@ -5,12 +5,19 @@
       "email": "demo@demo",
       "password": "demo",
       "id": "1",
-      "isAuthorized": false
+      "isAuthorized": true
     },
     {
       "email": "test@test.ru",
       "password": "abracadabra",
       "id": "28a0c6dwkenwk4ft",
+      "isAuthorized": false
+    },
+    {
+      "name": "Денис М",
+      "email": "drev@m",
+      "password": "qwert",
+      "id": "3klmoa3okf11eqsk",
       "isAuthorized": false
     }
   ],

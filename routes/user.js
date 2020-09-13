@@ -44,7 +44,7 @@ router.post("/register",upload.none(), function(request, response) {
     }
     else{//если существующий пользователь найден...
         //Отправляется ошибка о том, что пользователь такой уже существует
-        response.json({ success: false, error: { email:`E-Mail адрес ${email} уже существует.`}});
+        response.json({ success: false, error: `E-Mail адрес ${email} уже существует.`});
     }
 })
 

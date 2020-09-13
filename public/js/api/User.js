@@ -58,20 +58,7 @@ class User {
    * User.setCurrent.
    * */
   static login(data, callback = (f) => f) {
-    let a = {
-      url: this.URL + "/login",
-      data: data,
-      method: `POST`,
-      responseType: "json",
-      callback: (err, response) => {
-        if (response.success) {
-          User.setCurrent(response.user);
-        }
-        callback(err, response);
-      }
-    }
-    console.log(a)
-    createRequest({
+    return createRequest({
       url: this.URL + "/login",
       data: data,
       method: `POST`,
@@ -92,8 +79,7 @@ class User {
    * User.setCurrent.
    * */
   static register(data, callback = (f) => f) {
-    console.log(this.URL)
-    createRequest({
+    return createRequest({
       url: this.URL + "/register",
       data: data,
       method: `POST`,

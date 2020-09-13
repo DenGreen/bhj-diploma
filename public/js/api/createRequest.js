@@ -34,10 +34,8 @@ const createRequest = (options = {}) => {
   xhr.onloadend = function () {
     if (xhr.status === 200 && xhr.response.success === true) {
       options.callback(errorCritical, xhr.response);
-      return true;
     } else {
       options.callback(errorCritical, xhr.response);
-      return false;
     }
   };
 };
