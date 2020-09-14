@@ -26,7 +26,7 @@ class Entity {
    * что наследуется от Entity)
    * */
   static create(data, callback = (f) => f) {
-    modifiedData = Object.assign({ _method: 'PUT' }, data );
+    let modifiedData = Object.assign({ _method: 'PUT' }, data );
     return createRequest({
       url: this.URL,
       data: modifiedData,
@@ -56,7 +56,7 @@ class Entity {
    * (в зависимости от того, что наследуется от Entity)
    * */
   static remove(id = "", data, callback = (f) => f) {
-    modifiedData = Object.assign({ _method: 'DELETE', id: id }, data );
+    let modifiedData = Object.assign({ _method: 'DELETE', id: id }, data );
     return createRequest({
       url: this.URL,
       data: modifiedData,

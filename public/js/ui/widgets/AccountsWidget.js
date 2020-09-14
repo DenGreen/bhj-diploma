@@ -12,8 +12,13 @@ class AccountsWidget {
    * Если переданный элемент не существует,
    * необходимо выкинуть ошибку.
    * */
-  constructor( element ) {
-
+  constructor(element) {
+    if (!element) {
+      throw new Error("Передан пустой элемент в конструктор");
+    }
+    this.element = element;
+    this.registerEvents();
+    this.update();
   }
 
   /**
@@ -24,7 +29,13 @@ class AccountsWidget {
    * вызывает AccountsWidget.onSelectAccount()
    * */
   registerEvents() {
-
+    this.element.addEventListener("click", (e) => {
+      if (e.target.closest(".create-account")) {
+        App.getModal("createAccount").open();
+      } else if (e.target.closest(".account")) {
+        this.onSelectAccount(e.target);
+      }
+    });
   }
 
   /**
@@ -37,18 +48,14 @@ class AccountsWidget {
    * Отображает список полученных счетов с помощью
    * метода renderItem()
    * */
-  update() {
-
-  }
+  update() {}
 
   /**
    * Очищает список ранее отображённых счетов.
    * Для этого необходимо удалять все элементы .account
    * в боковой колонке
    * */
-  clear() {
-
-  }
+  clear() {}
 
   /**
    * Срабатывает в момент выбора счёта
@@ -57,18 +64,14 @@ class AccountsWidget {
    * счёта класс .active.
    * Вызывает App.showPage( 'transactions', { account_id: id_счёта });
    * */
-  onSelectAccount( element ) {
-
-  }
+  onSelectAccount(element) {}
 
   /**
    * Возвращает HTML-код счёта для последующего
    * отображения в боковой колонке.
    * item - объект с данными о счёте
    * */
-  getAccountHTML( item ) {
-
-  }
+  getAccountHTML(item) {}
 
   /**
    * Получает массив с информацией о счетах.
@@ -76,7 +79,5 @@ class AccountsWidget {
    * AccountsWidget.getAccountHTML HTML-код элемента
    * и добавляет его внутрь элемента виджета
    * */
-  renderItem( item ) {
-
-  }
+  renderItem(item) {}
 }

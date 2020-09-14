@@ -45,6 +45,7 @@ class Sidebar {
     menuItemLogin.addEventListener('click', function(){
       element = App.getModal('login');
       element.open();
+      console.log(element)
     });
 
     menuItemRegister.addEventListener('click', function(){
