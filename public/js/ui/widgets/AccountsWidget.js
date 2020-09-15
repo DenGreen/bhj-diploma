@@ -48,14 +48,32 @@ class AccountsWidget {
    * Отображает список полученных счетов с помощью
    * метода renderItem()
    * */
-  update() {}
+  update() {
+    let user = User.current();
+    if (user) {
+      Account.list(user, (err, response) => {
+        if (response.success) {
+          this.clear();
+          response.data.forEach((element) => {
+            this.renderItem(element);
+          });
+        } else {
+          alert(response.error);
+        }
+      });
+    }
+  }
 
   /**
    * Очищает список ранее отображённых счетов.
    * Для этого необходимо удалять все элементы .account
    * в боковой колонке
    * */
-  clear() {}
+  clear() {
+    document
+      .querySelectorAll(".account")
+      .forEach((element) => element.remove());
+  }
 
   /**
    * Срабатывает в момент выбора счёта
@@ -64,14 +82,28 @@ class AccountsWidget {
    * счёта класс .active.
    * Вызывает App.showPage( 'transactions', { account_id: id_счёта });
    * */
-  onSelectAccount(element) {}
+  onSelectAccount(element) {
+    let account = this.element.querySelectorAll(".account");
+    
+    account.forEach((elem) => elem.classList.remove("active"));
+    element.closest(".account").classList.add("active");
+    
+    App.showPage("transactions", { user_id: element.user_id, id: element.id });
+  }
 
   /**
    * Возвращает HTML-код счёта для последующего
    * отображения в боковой колонке.
    * item - объект с данными о счёте
    * */
-  getAccountHTML(item) {}
+  getAccountHTML(item) {
+    return `<li class="account" data-id="${item.id}">
+          <a href="#">
+            <span>${item.name}</span> /
+            <span>${item.sum} ₽</span>
+          </a>
+        </li>`;
+  }
 
   /**
    * Получает массив с информацией о счетах.
@@ -79,5 +111,9 @@ class AccountsWidget {
    * AccountsWidget.getAccountHTML HTML-код элемента
    * и добавляет его внутрь элемента виджета
    * */
-  renderItem(item) {}
+  renderItem(item) {
+    document
+      .querySelector(".accounts-panel")
+      .insertAdjacentHTML("beforeEnd", this.getAccountHTML(item));
+  }
 }
