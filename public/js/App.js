@@ -56,6 +56,7 @@ class App {
       createAccount: new Modal( document.querySelector( '#modal-new-account' )),
       newIncome: new Modal( document.querySelector( '#modal-new-income' )),
       newExpense: new Modal( document.querySelector( '#modal-new-expense' )),
+      newAccount: new Modal( document.querySelector( '#modal-new-account' ))
     };
   }
 

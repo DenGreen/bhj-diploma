@@ -30,10 +30,11 @@ class AccountsWidget {
    * */
   registerEvents() {
     this.element.addEventListener("click", (e) => {
+      let value;
       if (e.target.closest(".create-account")) {
         App.getModal("createAccount").open();
-      } else if (e.target.closest(".account")) {
-        this.onSelectAccount(e.target);
+      } else if (value = e.target.closest(".account")) {
+        this.onSelectAccount(value);
       }
     });
   }
@@ -51,7 +52,7 @@ class AccountsWidget {
   update() {
     let user = User.current();
     if (user) {
-      Account.list(user, (err, response) => {
+      Account.list({}, (err, response) => {
         if (response.success) {
           this.clear();
           response.data.forEach((element) => {
@@ -86,9 +87,9 @@ class AccountsWidget {
     let account = this.element.querySelectorAll(".account");
     
     account.forEach((elem) => elem.classList.remove("active"));
-    element.closest(".account").classList.add("active");
+    element.classList.add("active");
     
-    App.showPage("transactions", { user_id: element.user_id, id: element.id });
+    App.showPage("transactions", { account_id: element.dataset.id });
   }
 
   /**
@@ -112,8 +113,6 @@ class AccountsWidget {
    * и добавляет его внутрь элемента виджета
    * */
   renderItem(item) {
-    document
-      .querySelector(".accounts-panel")
-      .insertAdjacentHTML("beforeEnd", this.getAccountHTML(item));
+    this.element.insertAdjacentHTML("beforeEnd", this.getAccountHTML(item));
   }
 }

@@ -25,10 +25,9 @@ class UserWidget {
    * авторизованного пользователя
    * */
   update() {
-    if(User.current()){
-      document.querySelector('.user-name').textContent = User.current().name;
-    } else {
-      throw new Error("Нет информации о текущем пользователи");
+    const user = User.current();
+    if(user){
+      this.element.querySelector('.user-name').textContent = user.name;
     }
   }
 }
