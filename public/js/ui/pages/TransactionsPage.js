@@ -34,13 +34,13 @@ class TransactionsPage {
    * TransactionsPage.removeAccount соответственно
    * */
   registerEvents() {
-    this.element.onclick = (e) => {
+    this.element.addEventListener( 'click', (e) => {
       if (e.target.closest(".remove-account")) {
         this.removeAccount();
       } else if (e.target.closest(".transaction__remove")) {
         this.removeTransaction(e.target.dataset.id);
       }
-    };
+    });
   }
 
   /**
@@ -69,13 +69,9 @@ class TransactionsPage {
    * По удалению транзакции вызовите метод App.update()
    * */
   removeTransaction(id) {
-    if (confirm("Вы действительно хотите удалить счёт?")) {
+    if (confirm("Вы действительно хотите удалить транзакцию?")) {
       Transaction.remove(id, {}, (err, response) => {
-        if (response.success) {
           App.update();
-        } else {
-          alert(response.error);
-        }
       });
     }
   }
@@ -154,10 +150,10 @@ class TransactionsPage {
 
   /**
    * Формирует HTML-код транзакции (дохода или расхода).
-   * item - объект с информацией о транзакции
+   * item - объект с информацией о транзакции ${item.type == 'EXPENSE' ? 'transaction_expense' : 'transaction_income' }
    * */
   getTransactionHTML(item) {
-    return `<div class="transaction ${item.type == 'EXPENSE' ? 'transaction_expense' : 'transaction_income' } row">
+    return `<div class="transaction transaction_${item.type.toLowerCase()} row">
     <div class="col-md-7 transaction__details">
       <div class="transaction__icon">
           <span class="fa fa-money fa-2x"></span>
@@ -188,7 +184,7 @@ class TransactionsPage {
    * используя getTransactionHTML
    * */
   renderTransactions(data) {
-    const content = document.querySelector('.content');
+    const content = this.element.querySelector('.content');
     content.innerHTML = '';
     Array.from(data).forEach(item => {
       content.insertAdjacentHTML('beforeEnd', this.getTransactionHTML(item));

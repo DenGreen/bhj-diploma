@@ -22,26 +22,21 @@ class CreateTransactionForm extends AsyncForm {
    * */
   renderAccountsList() {
     Account.list({}, (err, response) => {
-      this.element.account_id.innerHTML = '';
-      for (let account of response.data) {
-        this.element.account_id.innerHTML += `<option value="${account.id}">${account.name}</option>`;
-      }
-    })
-
-    /*Account.list({}, (err, response) => {
       if (response.success) {
+        let accountsSelect = this.element.querySelector(".accounts-select");
+
+        accountsSelect.innerHTML = '';
+
         response.data.forEach((e) => {
-          this.element
-            .querySelector(".accounts-select")
-            .insertAdjacentHTML(
+          accountsSelect.insertAdjacentHTML(
               "beforeend",
-              `<option value="${e.user_id}">${e.name}</option>`
+              `""<option value="${e.id}">${e.name}</option>`
             );
         });
       } else {
         alert(response.error);
       }
-    });*/
+    });
   }
 
   /**
