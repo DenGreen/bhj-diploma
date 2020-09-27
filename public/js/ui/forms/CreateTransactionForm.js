@@ -22,20 +22,16 @@ class CreateTransactionForm extends AsyncForm {
    * */
   renderAccountsList() {
     Account.list({}, (err, response) => {
-      if (response.success) {
-        let accountsSelect = this.element.querySelector(".accounts-select");
+      let accountsSelect = this.element.querySelector(".accounts-select");
 
-        accountsSelect.innerHTML = '';
+      accountsSelect.innerHTML = "";
 
-        response.data.forEach((e) => {
-          accountsSelect.insertAdjacentHTML(
-              "beforeend",
-              `""<option value="${e.id}">${e.name}</option>`
-            );
-        });
-      } else {
-        alert(response.error);
-      }
+      response.data.forEach((e) => {
+        accountsSelect.insertAdjacentHTML(
+          "beforeend",
+          `<option value="${e.id}">${e.name}</option>`
+        );
+      });
     });
   }
 
@@ -47,14 +43,10 @@ class CreateTransactionForm extends AsyncForm {
    * */
   onSubmit(options) {
     Transaction.create(options, (err, response) => {
-      if (response.success) {
-        this.element.reset();
-        App.update();
-        App.getModal('newIncome').close();
-        App.getModal('newExpense').close();
-      } else {
-        alert(response.error);
-      }
+      this.element.reset();
+      App.update();
+      App.getModal("newIncome").close();
+      App.getModal("newExpense").close();
     });
   }
 }

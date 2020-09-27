@@ -12,8 +12,8 @@ class AsyncForm {
    * Сохраняет переданный элемент и регистрирует события
    * через registerEvents()
    * */
-  constructor( element ) {
-    if (!element){
+  constructor(element) {
+    if (!element) {
       throw new Error("Передан пустой элемент в конструктор");
     }
     this.element = element;
@@ -25,10 +25,10 @@ class AsyncForm {
    * вызывает метод submit()
    * */
   registerEvents() {
-    this.element.addEventListener('submit', (e) => {
+    this.element.addEventListener("submit", (e) => {
       e.preventDefault();
       this.submit();
-    })
+    });
   }
 
   /**
@@ -42,15 +42,13 @@ class AsyncForm {
     const objData = {};
     let formData = this.element;
 
-    for (let item of formData.elements){
+    for (let item of formData.elements) {
       objData[item.name] = item.value;
     }
     return objData;
-    
   }
 
-  onSubmit( options ) {
-  }
+  onSubmit(options) {}
 
   /**
    * Вызывает метод onSubmit и передаёт туда

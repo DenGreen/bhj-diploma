@@ -23,7 +23,7 @@ class TransactionsPage {
    * */
   update() {
     if (this.lastOptions) {
-      this.render( this.lastOptions );
+      this.render(this.lastOptions);
     }
   }
 
@@ -34,7 +34,7 @@ class TransactionsPage {
    * TransactionsPage.removeAccount соответственно
    * */
   registerEvents() {
-    this.element.addEventListener( 'click', (e) => {
+    this.element.addEventListener("click", (e) => {
       if (e.target.closest(".remove-account")) {
         this.removeAccount();
       } else if (e.target.closest(".transaction__remove")) {
@@ -55,9 +55,8 @@ class TransactionsPage {
     if (this.lastOptions) {
       if (confirm("Вы действительно хотите удалить счёт?")) {
         Account.remove(this.lastOptions.account_id, {}, (err, response) => {
-            App.update();
-          } 
-        )
+          App.update();
+        });
         this.clear();
       }
     }
@@ -71,7 +70,7 @@ class TransactionsPage {
   removeTransaction(id) {
     if (confirm("Вы действительно хотите удалить транзакцию?")) {
       Transaction.remove(id, {}, (err, response) => {
-          App.update();
+        App.update();
       });
     }
   }
@@ -86,24 +85,13 @@ class TransactionsPage {
     if (options) {
       this.lastOptions = options;
       Account.get(this.lastOptions.account_id, {}, (err, response) => {
-
-        if (response.success) {
-          this.renderTitle(response.data.name);
-        } else {
-          alert(response.error);
-        }
+        this.renderTitle(response.data.name);
       });
 
       Transaction.list(options, (err, response) => {
-
-        if (response.success) {
-          this.renderTransactions(response.data);
-        } else {
-          alert(response.error);
-        }
+        this.renderTransactions(response.data);
       });
     }
-    
   }
 
   /**
@@ -114,14 +102,14 @@ class TransactionsPage {
   clear() {
     this.renderTransactions([]);
     this.renderTitle("Название счёта");
-    this.lastOptions = undefined;
+    this.lastOptions = null;
   }
 
   /**
    * Устанавливает заголовок в элемент .content-title
    * */
   renderTitle(name) {
-    const contentTitle = document.querySelector('.content-title');
+    const contentTitle = document.querySelector(".content-title");
     contentTitle.textContent = name;
   }
 
@@ -161,7 +149,9 @@ class TransactionsPage {
       <div class="transaction__info">
           <h4 class="transaction__title">${item.name}</h4>
           <!-- дата -->
-          <div class="transaction__date">${this.formatDate(item.created_at)}</div>
+          <div class="transaction__date">${this.formatDate(
+            item.created_at
+          )}</div>
       </div>
     </div>
     <div class="col-md-3">
@@ -184,10 +174,10 @@ class TransactionsPage {
    * используя getTransactionHTML
    * */
   renderTransactions(data) {
-    const content = this.element.querySelector('.content');
-    content.innerHTML = '';
-    Array.from(data).forEach(item => {
-      content.insertAdjacentHTML('beforeEnd', this.getTransactionHTML(item));
+    const content = this.element.querySelector(".content");
+    content.innerHTML = "";
+    Array.from(data).forEach((item) => {
+      content.insertAdjacentHTML("beforeEnd", this.getTransactionHTML(item));
     });
   }
 }
