@@ -13,7 +13,6 @@ class CreateTransactionForm extends AsyncForm {
     if (!element) {
       throw new Error("Передан пустой элемент в конструктор");
     }
-    this.element = element;
     this.renderAccountsList();
   }
 
@@ -23,6 +22,13 @@ class CreateTransactionForm extends AsyncForm {
    * */
   renderAccountsList() {
     Account.list({}, (err, response) => {
+      this.element.account_id.innerHTML = '';
+      for (let account of response.data) {
+        this.element.account_id.innerHTML += `<option value="${account.id}">${account.name}</option>`;
+      }
+    })
+
+    /*Account.list({}, (err, response) => {
       if (response.success) {
         response.data.forEach((e) => {
           this.element
@@ -35,7 +41,7 @@ class CreateTransactionForm extends AsyncForm {
       } else {
         alert(response.error);
       }
-    });
+    });*/
   }
 
   /**
@@ -46,7 +52,6 @@ class CreateTransactionForm extends AsyncForm {
    * */
   onSubmit(options) {
     Transaction.create(options, (err, response) => {
-      
       if (response.success) {
         this.element.reset();
         App.update();

@@ -12,8 +12,8 @@ class Entity {
   static URL='';
   static list(data, callback = (f) => f) {
     return createRequest({
+      data:data,
       url: this.URL,
-      data,
       method: "GET",
       responseType: "json",
       callback,
@@ -28,7 +28,7 @@ class Entity {
   static create(data, callback = (f) => f) {
     let modifiedData = Object.assign({ _method: 'PUT' }, data );
     return createRequest({
-      url: this.URL,
+      url: `${this.URL}`,
       data: modifiedData,
       method: "POST",
       responseType: "json",
@@ -42,9 +42,8 @@ class Entity {
    * */
   static get(id = "", data, callback = (f) => f) {
     return createRequest({
-      url: this.URL,
-      id,
-      data,
+      url: `${this.URL}/${id}`,
+      data: data,
       method: "GET",
       responseType: "json",
       callback,
@@ -58,7 +57,7 @@ class Entity {
   static remove(id = "", data, callback = (f) => f) {
     let modifiedData = Object.assign({ _method: 'DELETE', id: id }, data );
     return createRequest({
-      url: this.URL,
+      url: `${this.URL}`,
       data: modifiedData,
       method: "POST",
       responseType: "json",

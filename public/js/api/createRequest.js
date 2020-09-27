@@ -11,7 +11,7 @@ const createRequest = (options = {}) => {
     options.url += `?`;
 
     for (let elementData in options.data) {
-      options.url += `${elementData}=${options.data.elementData}&`;
+      options.url += `${elementData}=${options.data[elementData]}&`;
     }
   } else {
     for (let elementData in options.data) {
